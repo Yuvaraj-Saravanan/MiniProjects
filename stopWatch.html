@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>STOPWATCH</title>
+    <style>
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:sans-serif;
+        }
+        body{
+            height:100vh;
+            width: 100vw;
+            display: flex;
+            justify-content:center;
+            align-items:center;
+            background-color:lightgreen;
+        }
+        .container{
+            padding:50px;  
+            padding-bottom:30px; 
+            transform:translate(0,-30px);
+            border-radius:10px;
+            background-color: #79d488;
+            box-shadow: 1px 1px 4px 1px black;
+        }
+        #clock-display{
+            font-size :3em;
+            box-shadow: 1px 1px 3px 1px teal;
+            background-color: #72fd8a;
+            padding:10px;
+            border-radius: 10px;
+            width:300px;
+            text-align: center;
+        }
+        .btn{
+            display: flex;
+            justify-content: space-between;
+            margin-top:10px ;
+        }
+        .btn button{
+            padding:10px 20px;
+            cursor: pointer;
+            box-shadow: 1px 1px 1px 1px lightgrey;
+        }
+        #start{
+            background-color: tomato;
+            border:none;
+            outline:none;
+            color:white;
+            border-radius:8px;
+        }
+        #pause{
+            background-color: rgb(110, 110, 236);
+            border:none;
+            outline:none;
+            color:white;
+            border-radius:8px;
+        }
+        #restart{
+            background-color: rgb(31, 136, 110);
+            border:none;
+            outline:none;
+            color:white;
+            border-radius:8px;
+        }
+        .btn button:active{
+            transform:translate(1px,1px);
+            opacity:0.7;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="clock-display">00:00:00:00</div>
+        <div class="btn">
+            <button id = "start">Start</button>
+            <button id="pause">Pause</button>
+            <button id="restart">Restart</button>
+        </div>
+    </div>
+</body>
+<script>
+    const clockDisplay = document.getElementById("clock-display")
+    const startBtn = document.getElementById("start")
+    const pause = document.getElementById("pause")
+    const reStart =document.getElementById("restart")
+
+    let milis=0;
+    let sec =0;
+    let min=0;
+    let hrs=0;
+
+    function startWatch(){
+        let interval = setInterval(()=>{
+            milis+=50
+            if(milis==1000){
+                sec++;
+                milis=100;
+            }
+            if(sec==60){
+                min++;
+                sec=0;
+            }
+            if(min==60){
+                hrs++;
+                min=0;
+                sec=0;
+            }
+            clockDisplay.textContent = `${hrs.toString().padStart(2,"0")}:${min.toString().padStart(2,"0")}:${sec.toString().padStart(2,"0")}:${Math.floor(milis.toString().padStart(2,"0")/10)}`
+        },50)
+
+        pause.addEventListener("click",()=>{
+            clearInterval(interval)
+        })
+        
+            
+        reStart.addEventListener("click",()=>{
+            milis=0;
+            sec=0;
+            min=0;
+            hrs=0;
+            clockDisplay.textContent ="00:00:00:00"
+        })
+            
+        }
+
+    startBtn.addEventListener("click",startWatch);
+
+</script>
+</html>
