@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator</title>
+    <style>
+        *{
+            margin:0;
+            padding:0;
+            font-family:"monospace"
+        }
+        body{
+            height:100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .calculator-container{
+            height:450px;
+            width:350px;
+            border:2px solid black;
+            display:flex;
+            flex-direction: column;
+            align-items:center;
+            padding: 20px;
+            border-radius: 20px;
+            background-color: slateblue;
+        }
+        #display{
+            width:330px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height:60px;
+            padding:10px;
+            border:5px solid lightskyblue;
+            background-color: white;
+            margin-top:30px;
+            border-radius: 20px;
+            font-size: 35px;
+            word-wrap: break-word; /* Add this line */
+            overflow-wrap: break-word;
+        }
+        .button-container{
+            margin-top:30px;
+            display: flex;
+            align-items: center;
+            justify-content:center;
+            flex-wrap: wrap;
+            gap:10px;
+        }
+        .numbers{
+            width:80px;
+            height:50px;
+            border-radius: 50px;
+            border:1px solid white;
+            font-size: 20px;
+        } 
+        #equal{
+            height:50px;
+            border-radius: 20px;
+            border:1px solid white;
+            font-size: 20px;
+            width:80px;
+            background-color: orangered;
+            color:white;
+        }
+        .op{
+            background-color: orange;
+            color:white;
+        }
+        #clear{
+            width: 80px;
+            height:50px;
+            border-radius: 20px;
+            border:1px solid white;
+            font-size: 20px;
+            background-color: orangered;
+            color:white;
+        }
+        .numbers:active{
+            transform:translate(1px,1px);
+            opacity: 0.9;
+        }
+        #clear:active{
+            transform:translate(1px,1px);
+            opacity: 0.9;
+        }
+        #equal:active{
+            transform:translate(1px,1px);
+            opacity: 0.9;
+        }
+    </style>
+</head>
+<body>
+    <div class="calculator-container">
+        <div ><p id="display"></p></div>
+        <div class="button-container">
+            <button class="numbers">1</button>
+            <button class="numbers">2</button>
+            <button class="numbers">3</button>
+            <button class="numbers op">+</button>
+            <button class="numbers">4</button>
+            <button class="numbers">5</button>
+            <button class="numbers">6</button>
+            <button class="numbers op">-</button>
+            <button class="numbers">7</button>
+            <button class="numbers">8</button>
+            <button class="numbers">9</button>
+            <button class="numbers op">*</button>
+            <button class="numbers ">0</button>
+            <button class="numbers ">.</button>
+            <button class="numbers">00</button>
+            <button class="numbers op">/</button>
+            <button class="numbers">(</button>
+            <button class="numbers">)</button>
+            <button  id = "clear">C</button>
+            <button  id="equal">=</button>
+        </div>
+    </div>
+</body>
+<script>
+    const display= document.getElementById("display");
+    const equalEl = document.getElementById("equal");
+    const clearEl = document.getElementById("clear");
+
+    const btnElements = document.querySelectorAll(".numbers")
+
+    btnElements.forEach(el=>{
+        el.addEventListener("click",()=>{
+            display.style.overflowX="auto"
+            display.textContent += el.textContent;
+        })
+    })
+
+    equalEl.addEventListener("click",()=>{
+        if(display.textContent==""){
+            alert("Please Enter Correct Value")
+            return
+        }
+        else{
+            try{
+            let displayText = display.textContent
+
+            display.textContent= eval(displayText)
+            }
+            catch(error){
+                display.style.fontSize="20px"
+                display.textContent=error
+
+            }
+        }
+    })
+
+    clearEl.addEventListener("click",()=>{
+        display.textContent=""
+    })
+    
+</script>
+</html>
