@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo-list</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <style>
+        *{
+            margin:0;
+            padding:0;
+            font-family:poppins;
+            box-sizing:border-box;
+            user-select: none;
+        }
+        body{
+            height:100vh;
+            width:100vw;
+            background:linear-gradient(45deg,rgb(182, 179, 39),rgb(190, 20, 148));
+            display:flex;
+            padding-top: 40px;
+            align-items: center;
+            flex-direction: column;
+        }
+        .container{
+            border:1px solid white;
+            width:400px;
+            height: fit-content;
+            padding:20px;
+            text-align: center;
+            color:white;
+            border-radius: 10px;
+            box-shadow: 1px 1px 3px 2px white;
+            background-color: lightseagreen;
+        }
+        .input-container{
+            padding:20px 0;
+        }
+        #user-input{
+            height:40px;
+            width:300px;
+            padding-left:20px;
+            padding-right:10px;
+            border-radius:10px;
+            border:none;
+        }
+        #input-btn{
+            padding:8px;
+            width:53px;
+            height:40px;
+            border-radius:10px;
+            border:none;
+            background-color: rgb(216, 216, 102);
+        }
+        #tasks-list{
+            list-style-type: none;
+            text-align: justify;
+            color:black;
+        }
+        #tasks-list li{
+            padding:10px;
+            position:relative;
+            margin: 1px;
+            border-radius: 10px;
+            cursor: pointer;
+            text-transform: capitalize;
+            transition: 0.3s;
+        }
+        #tasks-list li::before{
+            content:'';
+            display:inline-block;
+            height:10px;
+            width:10px;
+            border-radius: 50%;
+            background-color: rgb(203, 219, 142);
+            margin-right:10px;
+        }
+        #tasks-list li span{
+            position: absolute;
+            right:10px;
+            visibility: hidden;
+            text-align: center;
+        }
+        #tasks-list li:hover{
+            background-color: hsl(9, 67%, 72%);
+        }
+        #tasks-list li:hover span{
+            visibility: visible;
+            height:25px;
+            width:25px;
+            border-radius: 50%;
+            background-color: rgb(216, 216, 102);
+        }
+        #user-input:focus{
+            border:none;
+            outline:none;
+        }
+        #input-btn:active{
+            transform: translate(1px);
+            opacity: 0.7;
+        }
+        #para{
+            padding-top:10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Todo-list</h2>
+        <div class="input-container">
+            <input type="text" id="user-input" placeholder="Enter your tasks">
+            <button id ="input-btn">Add</button>
+            <p id="para"></p>
+        </div>
+    
+        <ul id="tasks-list">
+            
+        </ul>
+    </div>
+    <script>
+        const userInput = document.getElementById('user-input');
+        const inputBtn = document.getElementById('input-btn');
+        const tasksList = document.getElementById('tasks-list');
+        const para = document.getElementById('para')
+
+        userInput.addEventListener('keydown',element=> element.key=="Enter" ? addTask() : null)
+        inputBtn.addEventListener('click',addTask)
+        tasksList.innerHTML= localStorage.getItem('tasks')
+
+        function addTask(){
+            liItem = document.createElement("li")
+            spanEl = document.createElement('span')
+            if(userInput.value ==""){
+                para.textContent='Please enter your task'
+            }
+            else{
+                para.textContent=""
+                liItem.textContent = userInput.value
+                tasksList.appendChild(liItem)
+                liItem.appendChild(spanEl)
+                spanEl.innerHTML= '&#10005'
+                spanEl.setAttribute('onclick','del()')
+                localStorage.setItem('tasks',tasksList.innerHTML)
+                userInput.value = ""
+            }
+            liItem.addEventListener('click',del)
+        }
+        function del(){
+                event.target.parentElement.remove()
+                localStorage.setItem('tasks',tasksList.innerHTML)
+            }
+        tasksList.innerHTML= localStorage.getItem('tasks')
+    </script>
+</body>
+</html>
